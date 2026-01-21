@@ -383,3 +383,35 @@ window.addEventListener('resize', () => {
         renderer.setSize(window.innerWidth, window.innerHeight);
     }
 });
+// --- 6. FLIP CARD INTERACTION ---
+// Select all flip cards
+document.querySelectorAll('.flip-card').forEach(card => {
+    card.addEventListener('click', function() {
+        // Toggle the flip class
+        this.classList.toggle('flipped');
+        
+        // Get the back face element
+        const backFace = this.querySelector('.flip-back');
+        const text = backFace.getAttribute('data-text');
+        
+        // Check if we have already typed the message to avoid re-typing
+        if (this.classList.contains('flipped') && !backFace.classList.contains('typed')) {
+            backFace.innerHTML = ""; // Clear placeholder
+            backFace.classList.add('typed'); // Mark as typed
+            typeCardMessage(backFace, text);
+        }
+    });
+});
+
+// Helper function for typing card text
+function typeCardMessage(element, text) {
+    let i = 0;
+    function type() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, 50); // Typing speed
+        }
+    }
+    type();
+}
