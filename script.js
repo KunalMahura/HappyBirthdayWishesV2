@@ -1,6 +1,6 @@
 // --- CONFIGURATION ---
 const config = {
-    greeting: "Hello, Lydia",
+    greeting: "Hello, Miss",
     letter: "I really like your name!<br>And I made this just for you.",
     chatText: "Happy Birthday! Wishing you a fantastic year ahead! 🎉",
     card1: "It shines brighter than the moon we both love.",
