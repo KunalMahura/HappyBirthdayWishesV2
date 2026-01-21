@@ -1,6 +1,6 @@
 // --- CONFIGURATION ---
 const config = {
-    greeting: "Hello, MiSS",
+    greeting: "Hello, Lydia",
     letter: "I really like your name!<br>And I made this just for you.",
     chatText: "Happy Birthday! Wishing you a fantastic year ahead! 🎉",
     card1: "It shines brighter than the moon we both love.",
@@ -123,7 +123,7 @@ gsap.utils.toArray('.content').forEach((content) => {
     });
 });
 
-// --- 5. FINALE (Updated) ---
+// --- 5. FINALE (Updated for Mobile Responsiveness) ---
 document.getElementById('flame').addEventListener('click', function() {
     gsap.to(this, { scale: 0, opacity: 0, duration: 0.5 });
     gsap.to("#final-msg", { opacity: 1, duration: 1, delay: 0.5 });
@@ -145,10 +145,10 @@ document.getElementById('flame').addEventListener('click', function() {
 
 
 // ==========================================
-//    THREE.JS PARTICLE SYSTEM (Clean Heart Shape)
+//    THREE.JS PARTICLE SYSTEM (Mobile Optimized)
 // ==========================================
 let scene, camera, renderer, particles;
-let count = 4000; // Particle count optimized for clarity
+let count = 4000; 
 
 function getHeartTexture() {
     const canvas = document.createElement('canvas');
@@ -174,14 +174,19 @@ function initParticles() {
     while(container.firstChild) container.removeChild(container.firstChild);
 
     scene = new THREE.Scene();
+    
+    // --- RESPONSIVE CAMERA SETUP ---
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     
+    // Adjust camera distance based on screen width
+    // On mobile (aspect ratio < 1), we move the camera back significantly
+    const aspect = window.innerWidth / window.innerHeight;
+    camera.position.z = aspect < 1 ? 90 : 30; 
+
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     container.appendChild(renderer.domElement);
-
-    camera.position.z = 30;
 
     createSphereParticles();
     animateParticles();
@@ -195,7 +200,6 @@ function createSphereParticles() {
     const colorObj = new THREE.Color();
 
     for (let i = 0; i < count; i++) {
-        // Start with sphere distribution
         const phi = Math.acos(-1 + (2 * i) / count);
         const theta = Math.sqrt(count * Math.PI) * phi;
         const r = 10;
@@ -207,11 +211,7 @@ function createSphereParticles() {
         positions[i * 3 + 1] = y + (Math.random() - 0.5);
         positions[i * 3 + 2] = z + (Math.random() - 0.5);
 
-        // --- ALL RED/PINK ---
-        colorObj.setStyle('#fc1f68'); // Set base color to the pink theme
-        // Optional: Add tiny variation for sparkle
-        // colorObj.offsetHSL(0, 0, (Math.random() - 0.5) * 0.1); 
-
+        colorObj.setStyle('#fc1f68'); 
         colors[i * 3] = colorObj.r;
         colors[i * 3 + 1] = colorObj.g;
         colors[i * 3 + 2] = colorObj.b;
@@ -221,7 +221,7 @@ function createSphereParticles() {
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const material = new THREE.PointsMaterial({
-        size: 0.7, // Bigger particles
+        size: 0.6, 
         map: getHeartTexture(), 
         vertexColors: true,
         transparent: true,
@@ -254,9 +254,8 @@ function createTextPoints(text) {
     const data = imageData.data;
     const points = [];
 
-    // Less density scan for cleaner text
-    for (let y = 0; y < canvas.height; y += 4) { 
-        for (let x = 0; x < canvas.width; x += 4) {
+    for (let y = 0; y < canvas.height; y += 3) {
+        for (let x = 0; x < canvas.width; x += 3) {
             const index = (y * canvas.width + x) * 4;
             if (data[index + 3] > 128) {
                 points.push({
@@ -284,8 +283,7 @@ function morphToText(text) {
             targetPositions[i * 3 + 1] = p.y;
             targetPositions[i * 3 + 2] = 0;
         } else {
-            // Push extras far away so they don't clutter
-            const r = 50; 
+            const r = 30; // Extras fly further out
             const theta = Math.random() * Math.PI * 2;
             const phi = Math.random() * Math.PI;
             targetPositions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
@@ -308,7 +306,6 @@ function morphToText(text) {
     }
 }
 
-// --- NEW CLEAN HEART SHAPE FUNCTION ---
 function morphToHeart() {
     const geometry = particles.geometry;
     const currentPositions = geometry.attributes.position.array;
@@ -318,26 +315,19 @@ function morphToHeart() {
 
     for (let i = 0; i < count; i++) {
         let x, y, z;
-        // Use Rejection Sampling on a 2D Heart Formula
-        // This creates a flat, distinct heart shape (not a blob)
         while (true) {
-            // Random points in a box
-            let tx = Math.random() * 3 - 1.5; // range -1.5 to 1.5
+            let tx = Math.random() * 3 - 1.5; 
             let ty = Math.random() * 3 - 1.5;
-            
-            // Heart Equation: (x^2 + y^2 - 1)^3 - x^2*y^3 <= 0
             if ( Math.pow(tx*tx + ty*ty - 1, 3) - (tx*tx * ty*ty*ty) <= 0 ) {
-                x = tx * 15; // Scale up to size 15
+                x = tx * 15;
                 y = ty * 15;
                 break;
             }
         }
-        
-        // Add minimal thickness so it's not perfectly flat (looks better rotating)
         z = (Math.random() - 0.5) * 4; 
 
         targetPositions[i * 3] = x;
-        targetPositions[i * 3 + 1] = y + 3; // Move up slightly
+        targetPositions[i * 3 + 1] = y + 3; 
         targetPositions[i * 3 + 2] = z;
     }
 
@@ -358,7 +348,7 @@ function morphToHeart() {
 function animateParticles() {
     requestAnimationFrame(animateParticles);
     if(particles) {
-        particles.rotation.y += 0.005; // Gentle rotation
+        particles.rotation.y += 0.005; 
     }
     renderer.render(scene, camera);
 }
@@ -382,10 +372,13 @@ function setupInputListeners() {
     });
 }
 
-// Window Resize
+// Responsive Camera Adjustment on Resize
 window.addEventListener('resize', () => {
     if(camera && renderer) {
-        camera.aspect = window.innerWidth / window.innerHeight;
+        const aspect = window.innerWidth / window.innerHeight;
+        camera.aspect = aspect;
+        // Update camera Z on resize too
+        camera.position.z = aspect < 1 ? 90 : 30; 
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
     }
