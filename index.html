@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+    <div class="bg-gradient"></div>
+    <div id="rain-container"></div>
+    
+
+    <audio id="bg-music" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="three-container"></div>
+    
+    <div class="input-container" id="morph-input">
+        <div class="input-wrapper">
+            <input type="text" id="morphText" placeholder="Type anything..." maxlength="20">
+            <button id="typeBtn">MORPH</button>
+        </div>
+    </div>
+
+    <section class="section" id="intro">
+        <h1 class="narrative-text" data-text="Hello, MISS ರ◡⁠ರ"></h1>
+        <div class="envelope-container" id="envelope-trigger">
+            <div class="envelope">
+                <div class="paper">
+                    <div class="heart-sticker">♥</div>
+                    <p id="letter-content">Loading...</p>
+                </div>
+                <div class="flap top-flap"></div>
+                <div class="pocket"></div>
+            </div>
+        </div>
+        <p class="hint">(Click Envelope to Open)</p>
+    </section>
+
+    <section class="section">
+        <div class="narrative-text" data-text="It's your birthday!"></div>
+        <div class="chat-wrapper">
+            <div class="chat-bubble" id="chat-msg">...</div>
+            <div class="input-bar">
+                <button id="send-btn">Send Wish</button>
+                <div id="sent-text">Delivered</div>
+                <svg id="paper-plane" viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>
+            </div>
+        </div>
+    </section>
+
+    <section class="section"><div class="narrative-text" data-text="That's what I was going to do."></div></section>
+    <section class="section"><div class="narrative-text" data-text="But then I stopped."></div></section>
+    <section class="section"><div class="narrative-text" data-text="I realized, I wanted to do something special."></div></section>
+    <section class="section"><div class="narrative-text" data-text="Because you are special."></div></section>
+
+    <section class="section">
+        <h1>Why You?</h1>
+        <p class="sub-text">Because you are rare.</p>
+        <div class="cards-grid">
+            <div class="card"><h3>Your Smile</h3><p id="card1">...</p></div>
+            <div class="card"><h3>Your Heart</h3><p id="card2">...</p></div>
+            <div class="card"><h3>Your Laugh</h3><p id="card3">...</p></div>
+        </div>
+    </section>
+
+    <section class="section poem-section">
+        <div class="content">
+            <p class="poem-text">
+                The only difference between<br>◇<br>
+                you and the moon is<br>◇<br>
+                that the moon needs the sun to shine<br>◇<br>
+                but my dear...<br>
+                <span class="highlight-pink">you shine all on your own.</span><br>◇
+            </p>
+        </div>
+    </section>
+
+    <section class="section poem-section">
+        <div class="content">
+            <h2>How can I tell you?</h2>
+            <hr>
+            <p class="poem-text">
+                Your voice still rings in my heart<br>◇<br>
+                Your eyes were like apricity to my cold heart<br>◇<br>
+                Missing you still aches my heart<br>◇<br>
+                I love you more than my own heart
+            </p>
+            <hr>
+        </div>
+    </section>
+
+    <section class="section poem-section">
+        <div class="content">
+            <p class="poem-text">
+                I would break off a piece of a star<br>
+                to make sure you always have light...<br>
+                But my hands are only flesh.<br>
+                <br>
+                Therefore, I give you my heart.
+            </p>
+            <br><br>
+            <p class="hint">(Keep scrolling for the surprise)</p>
+            <div style="font-size: 2rem; animation: bounce 2s infinite;">↓</div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="narrative-text" data-text="Make a Wish"></div>
+        <div class="cake-wrapper">
+            <div class="candle"><div class="flame" id="flame"></div></div>
+            <div class="cake-layer layer-top"></div>
+            <div class="cake-layer layer-middle"></div>
+            <div class="cake-layer layer-bottom"></div>
+        </div>
+        <div id="final-msg">
+            <h2>Happy Birthday!</h2>
+            <p id="final-sub">May all your dreams come true.</p>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
