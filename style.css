@@ -258,7 +258,7 @@ hr { border-color: #fc1f68; width: 50%; opacity: 0.5; margin: 30px auto; }
 }
 #typeBtn {
     background: linear-gradient(135deg, #fc1f68, #ff6b6b);
-    border: none; padding: 10px 25px; color: white;
+    border: none; padding: 10px 25px; 
     border-radius: 25px; font-weight: bold; cursor: pointer;
 }
 /* --- NEW: FLIP CARD STYLES --- */
