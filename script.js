@@ -148,9 +148,7 @@ document.getElementById('flame').addEventListener('click', function() {
 //    THREE.JS PARTICLE SYSTEM (Mobile Optimized)
 // ==========================================
 let scene, camera, renderer, particles;
-// In script.js, replace 'let count = 4000;' with:
-const isMobile = window.innerWidth < 768;
-let count = isMobile ? 1500 : 4000; // Use fewer particles on mobile
+let count = 4000; 
 
 function getHeartTexture() {
     const canvas = document.createElement('canvas');
